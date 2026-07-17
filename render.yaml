@@ -1,0 +1,25 @@
+# Render Infrastructure as Code Configuration
+# ===========================================
+# Automated deployment spec for Pulse26: FIFA 2026 Multilingual Crowd & Incident Commander
+# Documentation: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: pulse26-commander
+    runtime: python
+    region: oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run app.py --server.port $PORT --server.address 0.0.0.0
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-4o-mini
+      - key: LOG_LEVEL
+        value: INFO
+      - key: APP_ENV
+        value: render-production
